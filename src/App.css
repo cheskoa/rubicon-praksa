@@ -1,30 +1,239 @@
+.App {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.main {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 .options {
-  margin: 20px;
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0 40px 0;
+  flex-wrap: wrap;
 }
 
 button {
-  padding: 10px 20px;
-  border-radius: 6px;
+  padding: 15px 30px;
+  border-radius: 25px;
   border: none;
   cursor: pointer;
   font-size: 16px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.6);
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+}
+
+button:active {
+  transform: translateY(-1px);
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+button:hover::before {
+  left: 100%;
+}
+
+.list {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  margin: 20px 0;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  backdrop-filter: blur(10px);
+}
+
+.list h2 {
+  color: #4c1d95;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  text-align: center;
+  background: linear-gradient(45deg, #8b5cf6, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .grid {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 25px;
   padding: 0;
+  margin: 0;
 }
 
 .grid li {
   text-align: center;
+  background: white;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.grid li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+  border-color: #8b5cf6;
 }
 
 .grid img {
-  border-radius: 8px;
+  border-radius: 12px;
   max-width: 100%;
+  height: 270px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+  background: #f3f4f6;
+}
+
+.grid li:hover img {
+  transform: scale(1.05);
+}
+
+.grid p {
+  margin: 10px 0 8px 0;
+  font-weight: 600;
+  color: #374151;
+  font-size: 14px;
+  line-height: 1.4;
+  min-height: 2.8em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.grid span {
+  display: inline-block;
+  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+/* Search results styling */
+.list p {
+  text-align: center;
+  color: #6b7280;
+  font-style: italic;
+  margin: 20px 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .main {
+    padding: 15px;
+  }
+  
+  .options {
+    gap: 15px;
+    margin: 15px 0 30px 0;
+  }
+  
+  button {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+  
+  .list {
+    padding: 20px;
+    margin: 15px 0;
+  }
+  
+  .list h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+  }
+  
+  .grid li {
+    padding: 12px;
+  }
+  
+  .grid p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 10px;
+  }
+  
+  .options {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin: 15px 0 25px 0;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 13px;
+    width: 200px;
+  }
+  
+  .list {
+    padding: 15px;
+    margin: 10px 0;
+  }
+  
+  .list h2 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+  
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 15px;
+  }
+  
+  .grid li {
+    padding: 10px;
+  }
+  
+  .grid p {
+    font-size: 12px;
+    min-height: 2.4em;
+  }
+  
+  .grid span {
+    font-size: 11px;
+    padding: 3px 10px;
+  }
 }
