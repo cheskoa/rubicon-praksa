@@ -1,0 +1,96 @@
+.poster-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 25px;
+  padding: 0;
+  margin: 0;
+}
+
+.poster-card {
+  text-align: center;
+  background: white;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.poster-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.2);
+  border-color: #8b5cf6;
+}
+
+.poster-image {
+  border-radius: 12px;
+  max-width: 100%;
+  height: 270px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+  background: #f3f4f6;
+}
+
+.poster-card:hover .poster-image {
+  transform: scale(1.05);
+}
+
+.poster-title {
+  margin: 10px 0 8px 0;
+  font-weight: 600;
+  color: #374151;
+  font-size: 14px;
+  line-height: 1.4;
+  min-height: 2.8em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.poster-rating {
+  display: inline-block;
+  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .poster-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+  }
+  .poster-card {
+    padding: 12px;
+  }
+  .poster-title {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .poster-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 15px;
+  }
+  .poster-card {
+    padding: 10px;
+  }
+  .poster-title {
+    font-size: 12px;
+    min-height: 2.4em;
+  }
+  .poster-rating {
+    font-size: 11px;
+    padding: 3px 10px;
+  }
+}
+
+
