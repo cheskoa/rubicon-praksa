@@ -1,5 +1,6 @@
 import "../styles/header.css";
 import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
+import { useLocation } from "react-router-dom";
 
 interface HeaderProps {
   onSearch?: (query: string) => void;
@@ -11,6 +12,7 @@ export interface HeaderRef {
 
 const Header = forwardRef<HeaderRef, HeaderProps>(({ onSearch }, ref) => {
   const [query, setQuery] = useState("");
+  const location = useLocation();
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -47,6 +49,13 @@ const Header = forwardRef<HeaderRef, HeaderProps>(({ onSearch }, ref) => {
       }
     };
   }, []);
+
+  // Keep input in sync with URL param "q"
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const q = params.get("q") || "";
+    setQuery(q);
+  }, [location.search]);
 
   return (
     <header className="header">

@@ -41,3 +41,23 @@ export async function searchMulti(query) {
     return [];
   }
 }
+
+export async function getMovieDetails(id) {
+  try {
+    const res = await api.get(`/movie/${id}`);
+    return res.data;
+  } catch (err) {
+    console.error("Greška kod dohvata detalja filma:", err.response?.data || err.message);
+    return null;
+  }
+}
+
+export async function getTVDetails(id) {
+  try {
+    const res = await api.get(`/tv/${id}`);
+    return res.data;
+  } catch (err) {
+    console.error("Greška kod dohvata detalja serije:", err.response?.data || err.message);
+    return null;
+  }
+}
