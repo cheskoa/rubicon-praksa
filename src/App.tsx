@@ -79,6 +79,7 @@ function App() {
       />
 
       <main className="main">
+        {location.pathname === "/" && (
         <div className="options">
           <button onClick={() => {
             const params = new URLSearchParams(location.search);
@@ -97,6 +98,7 @@ function App() {
             setSearchQueryGlobal("");
           }}>📺 TV Shows</button>
         </div>
+        )}
 
         <Routes>
           <Route path="/" element={(
