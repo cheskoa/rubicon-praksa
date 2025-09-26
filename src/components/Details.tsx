@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getMovieDetails, getTVDetails } from '../api/api';
-import './details.css';
+import '../styles/details.css';
 
 const Details: React.FC = () => {
   const { type, id } = useParams();

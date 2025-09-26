@@ -1,4 +1,4 @@
-import "./poster.css";
+import "../styles/poster.css";
 import { Link } from "react-router-dom";
 import { Movie, TVShow } from "../types/types";
 
