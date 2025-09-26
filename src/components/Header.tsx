@@ -21,12 +21,10 @@ const Header = forwardRef<HeaderRef, HeaderProps>(({ onSearch }, ref) => {
     const value = e.target.value;
     setQuery(value);
 
-    // Clear existing timeout
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
 
-    // Set new timeout for debouncing
     timeoutRef.current = setTimeout(() => {
       setSearchQueryGlobal(value);
       onSearch?.(value);
@@ -44,7 +42,6 @@ const Header = forwardRef<HeaderRef, HeaderProps>(({ onSearch }, ref) => {
     clearSearch
   }));
 
-  // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
       if (timeoutRef.current) {
@@ -53,7 +50,6 @@ const Header = forwardRef<HeaderRef, HeaderProps>(({ onSearch }, ref) => {
     };
   }, []);
 
-  // Keep input in sync with URL param "q"
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const q = params.get("q") || "";

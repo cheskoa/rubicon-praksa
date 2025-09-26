@@ -55,7 +55,6 @@
   font-style: italic;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
   .header {
     padding: 12px 15px;

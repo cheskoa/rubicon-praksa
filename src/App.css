@@ -140,7 +140,6 @@ button:hover::before {
   margin-top: 8px;
 }
 
-/* Search results styling */
 .list p {
   text-align: center;
   color: #6b7280;
@@ -148,7 +147,6 @@ button:hover::before {
   margin: 20px 0;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
   .main {
     padding: 15px;
