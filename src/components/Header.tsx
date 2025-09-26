@@ -1,6 +1,7 @@
 import "../styles/header.css";
 import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import { useLocation } from "react-router-dom";
+import { useAppStore } from "../store/useAppStore";
 
 interface HeaderProps {
   onSearch?: (query: string) => void;
@@ -13,6 +14,7 @@ export interface HeaderRef {
 const Header = forwardRef<HeaderRef, HeaderProps>(({ onSearch }, ref) => {
   const [query, setQuery] = useState("");
   const location = useLocation();
+  const setSearchQueryGlobal = useAppStore(s => s.setSearchQuery);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -26,8 +28,9 @@ const Header = forwardRef<HeaderRef, HeaderProps>(({ onSearch }, ref) => {
 
     // Set new timeout for debouncing
     timeoutRef.current = setTimeout(() => {
+      setSearchQueryGlobal(value);
       onSearch?.(value);
-    }, 300); // 0.3 seconds
+    }, 300);
   }
 
   const clearSearch = () => {

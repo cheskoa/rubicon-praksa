@@ -1,10 +1,12 @@
 import { useEffect, useState, useRef } from "react";
-import { Routes, Route, useLocation, useNavigate, useParams, Link } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Header, { HeaderRef } from "./components/Header";
 import PosterGrid from "./components/poster";
-import { getTopRatedMovies, getTopRatedTVShows, searchMulti, getMovieDetails, getTVDetails } from "./api/api";
+import Details from "./components/Details";
+import { getTopRatedMovies, getTopRatedTVShows, searchMulti } from "./api/api";
 import { Movie, TVShow } from "./types/types";
 import "./App.css";
+import { useAppStore } from "./store/useAppStore";
 
 function useQuery() {
   const { search } = useLocation();
@@ -14,7 +16,9 @@ function useQuery() {
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [tvShows, setTVShows] = useState<TVShow[]>([]);
-  const [view, setView] = useState<"movies" | "tv">("movies");
+  const view = useAppStore(s => s.view);
+  const setView = useAppStore(s => s.setView);
+  const setSearchQueryGlobal = useAppStore(s => s.setSearchQuery);
   const [searchResults, setSearchResults] = useState<(Movie | TVShow)[]>([]);
   const [searching, setSearching] = useState(false);
   const headerRef = useRef<HeaderRef>(null);
@@ -38,6 +42,7 @@ function App() {
     const q = query.get("q") || "";
     const v = (query.get("view") as "movies" | "tv") || "movies";
     setView(v);
+    setSearchQueryGlobal(q);
     if (!q) {
       setSearchResults([]);
       setSearching(false);
@@ -80,12 +85,16 @@ function App() {
             params.set("view", "movies");
             params.delete("q");
             navigate({ pathname: "/", search: params.toString() });
+            setView("movies");
+            setSearchQueryGlobal("");
           }}>🎬 Movies</button>
           <button onClick={() => {
             const params = new URLSearchParams(location.search);
             params.set("view", "tv");
             params.delete("q");
             navigate({ pathname: "/", search: params.toString() });
+            setView("tv");
+            setSearchQueryGlobal("");
           }}>📺 TV Shows</button>
         </div>
 
@@ -105,50 +114,12 @@ function App() {
               )}
             </div>
           )} />
-          <Route path="/details/:type/:id" element={<DetailsPage />} />
+          <Route path="/details/:type/:id" element={<Details />} />
         </Routes>
       </main>
     </div>
   );
 }
 
-function DetailsPage() {
-  const { type, id } = useParams();
-  const navigate = useNavigate();
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      setLoading(true);
-      const res = type === "movie" ? await getMovieDetails(id) : await getTVDetails(id);
-      setData(res);
-      setLoading(false);
-    })();
-  }, [type, id]);
-
-  return (
-    <div style={{ padding: 20 }}>
-      <button onClick={() => navigate(-1)}>⟵ Nazad</button>
-      {loading && <p>Loading...</p>}
-      {!loading && data && (
-        <div style={{ display: "flex", gap: 20, marginTop: 20 }}>
-          <img
-            src={data.poster_path ? `https://image.tmdb.org/t/p/w300${data.poster_path}` : "/placeholder-movie.jpg"}
-            alt={data.title || data.name}
-            style={{ borderRadius: 12 }}
-          />
-          <div>
-            <h2>{data.title || data.name}</h2>
-            <p>⭐ {data.vote_average}</p>
-            {data.overview && <p>{data.overview}</p>}
-            {type === "movie" && data.release_date && <p>Release date: {data.release_date}</p>}
-            {type === "tv" && data.first_air_date && <p>First air date: {data.first_air_date}</p>}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default App;
